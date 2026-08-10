@@ -39,9 +39,14 @@ class Engine:
             agent_id = task.agent_id
             if agent_id in self.agents:
                 agent = self.agents[agent_id]
-                result = agent.execute_task(task)
-                logger.info(f'Task {task_id} executed')
-                return result
+                try:
+                    result = agent.execute_task(task)
+                    logger.info(f'Task {task_id} executed')
+                    return result
+                except Exception as e:
+                    # Handle the exception instead of propagating it
+                    logger.error(f'Unexpected error executing task {task_id}: {e}')
+                    raise AgentNotRegisteredError(f'Failed to execute task {task_id}')
             else:
                 raise AgentNotRegisteredError(f'Agent {agent_id} not registered')
         else:
