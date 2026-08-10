@@ -1,0 +1,9 @@
+# default.yaml
+
+agents:
+  - name: Agent 1
+    type: request
+  - name: Agent 2
+    type: response
+orchestrator:
+  type: meta-lambda
